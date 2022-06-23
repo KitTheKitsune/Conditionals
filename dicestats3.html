@@ -1,0 +1,70 @@
+<!doctype html>
+<!-- dicestats3.html                               Dave Reed -->
+<!-- This page simulates dice rolls and displays statistics. -->
+<!-- ======================================================= -->
+
+<html>
+ <head>
+   <title> Die Rolls </title>
+   <script src="http://dave-reed.com/csc121/random.js">
+     // Using: RandomInt
+   </script>
+   <script>
+     function RollStats()
+     // Assumes: desiredBox contains the desired number of rolls
+     // Results: simulates that number of rolls and reports doubles
+     {
+       desiredRolls = parseFloat(document.getElementById('desiredBox').value);
+       
+        numRolls = 0;
+        numDoubles = 0;
+        percent = 0;
+        sevens = 0;
+        natural = 0;
+         
+       while (numRolls < desiredRolls) {
+         roll1 = RandomInt(1, 6);
+         roll2 = RandomInt(1, 6);
+       
+         numRolls = numRolls + 1;
+         if (roll1 == roll2) {
+           numDoubles = numDoubles + 1;
+         }else if (roll1 + roll2 == 7){
+             sevens = sevens + 1;
+             if(roll1 == 3 || roll2 == 3){
+                 natural = natural + 1;
+             }
+         }
+       }
+       percent = Math.round(100*numDoubles/numRolls)/100;
+       document.getElementById('outputOne').innerHTML =
+         'Out of ' + numRolls + ' rolls, ' + numDoubles + ' were doubles. (' + percent + '%)';
+         
+         percent = Math.round(100*sevens/numRolls)/100;
+       document.getElementById('outputTwo').innerHTML =
+         'Out of ' + numRolls + ' rolls, ' + sevens + ' were sevens. (' + percent + '%)';
+         
+         percent = Math.round(100*natural/numRolls)/100;
+       document.getElementById('outputThree').innerHTML =
+         'Out of ' + numRolls + ' rolls, ' + natural + ' were naturals. (' + percent + '%)';
+        
+     }
+   </script>
+ </head>
+
+ <body>
+   <div style="text-align:center"> 
+     <p>
+       Enter the desired number of rolls: <input type="text" id="desiredBox" value=1000>   
+     </p>
+     <button onclick="RollStats();">Click to Roll</button>
+     <hr>
+     <div id="outputDiv">
+            <p id="outputOne"></p>
+            <p id="outputTwo"></p>
+            <p id="outputThree"></p>
+       </div>
+   </div>
+ </body>
+</html>
+
